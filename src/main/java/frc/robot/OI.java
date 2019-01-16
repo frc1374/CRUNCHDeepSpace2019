@@ -11,7 +11,7 @@ public class OI {
      public static double getDriverSpeed() { return Driver.getTriggerAxis(Hand.kLeft) - Driver.getTriggerAxis(Hand.kRight); }
      public static double getSteer() { return Driver.getX(Hand.kLeft); }
 
-     //operator
+     // operator
 
      /*                                 Controls
      * Driver
