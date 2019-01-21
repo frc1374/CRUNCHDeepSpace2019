@@ -10,6 +10,7 @@ public class OI {
      // driver
      public static double getDriverSpeed() { return Driver.getTriggerAxis(Hand.kLeft) - Driver.getTriggerAxis(Hand.kRight); }
      public static double getSteer() { return Driver.getX(Hand.kLeft); }
+     public static boolean getGyro() { return Driver.getXButton(); }
 
      // operator
 

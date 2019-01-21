@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.commands.DriveCommand;
+import frc.robot.commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
+  public static final GyroCommand GyroCommand = new GyroCommand();
   Command DriveCommand = new DriveCommand();
 
   /**
@@ -64,6 +65,7 @@ public class Robot extends IterativeRobot {
     // autoSelected = SmartDashboard.getString("Auto Selector",
     // defaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    Robot.DriveSubsystem.ResetGyroAngle();
   }
 
   /**
@@ -88,8 +90,9 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    DriveCommand.start();
     Scheduler.getInstance().run();
+    DriveCommand.start();
+    GyroCommand.start();
   }
 
   /**

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
@@ -9,6 +10,17 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class DriveSubsystem extends PIDSubsystem {
+
+  
+  static int b;
+  public boolean isstill = true;
+  public static float angle = 0;
+	public float minimalvoltage = 0.25f;
+	public double post = 0;
+  public double negt = 0;
+  public double maxGyro = .5;
+  public double rotateToAngleRate;
+  public AHRS ahrs;
 
   public TalonSRX left1 = new TalonSRX(RobotMap.left1);
   public TalonSRX left2 = new TalonSRX(RobotMap.left2);
@@ -35,6 +47,18 @@ public class DriveSubsystem extends PIDSubsystem {
     tankDrive(speed-turn, speed+turn);
   }
 
+  public double GyroDrive(double turn){
+    angle+=turn;
+    b = (int)angle/180;
+    angle = (float) (angle * Math.pow(-1, b));
+    return angle;
+  }
+
+  public void ResetGyroAngle(){
+    ahrs.reset();
+    angle = 0;
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -50,8 +74,33 @@ public class DriveSubsystem extends PIDSubsystem {
   }
 
   @Override
-  protected void usePIDOutput(double output) {
+  public void usePIDOutput(double output) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor.set(output);
+    if (output >= maxGyro) {
+			rotateToAngleRate = maxGyro;
+    }
+    else if (output<=-maxGyro) {
+			rotateToAngleRate = -maxGyro;
+    }
+    else {
+			rotateToAngleRate = output;
+		}
+		if (isstill) {
+			if (this.getPIDController().getError() >= 2 || this.getPIDController().getError() <= -2) {
+				if (rotateToAngleRate <= minimalvoltage && rotateToAngleRate > 0) {
+					post += 1;
+					rotateToAngleRate = minimalvoltage - ((1 -this.getPIDController().getError()) / 65) + post / 100;
+        }
+        else if (rotateToAngleRate >= -minimalvoltage && rotateToAngleRate < 0) {
+					negt += 1;
+					rotateToAngleRate = -minimalvoltage + ((1 - this.getPIDController().getError()) / 65) - negt / 100;
+				}
+      }
+      else {
+				post = 0;
+				negt = 0;
+			}
+		}
   }
 }
