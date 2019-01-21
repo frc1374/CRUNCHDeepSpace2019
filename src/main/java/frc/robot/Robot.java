@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.commands.DriveCommand;
-
+import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -23,6 +24,8 @@ public class Robot extends IterativeRobot {
 
   public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
   Command DriveCommand = new DriveCommand();
+      public static ElevatorSubsystem ElevatorSubsystem;
+      public static LiftSubsystem LiftSubsystem;
 
   /**
    * This function is run when the robot is first started up and should be
