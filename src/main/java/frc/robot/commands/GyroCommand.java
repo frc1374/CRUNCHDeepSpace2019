@@ -9,11 +9,11 @@ import frc.robot.Robot;
 public class GyroCommand extends Command {
   double Angle;
 	double Start, End;
-  public GyroCommand() {
+  public GyroCommand(double angle) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.DriveSubsystem);
-    Angle = 180;
+    Angle = angle;
   }
 
   // Called just before this Command runs the first time
@@ -27,22 +27,26 @@ public class GyroCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.getGyro()) {
+    // if (Robot.inAuto || OI.getGyro()) {
       Robot.DriveSubsystem.usePIDOutput(Robot.DriveSubsystem.getPIDController().get());
       Robot.DriveSubsystem.arcadeDrive(0, Robot.DriveSubsystem.rotateToAngleRate);
-      if(Math.abs(Robot.DriveSubsystem.getPIDController().getError()) > 2 ){
+      if(Math.abs(Robot.DriveSubsystem.getPIDController().getError()) > 2) {
         Start = System.currentTimeMillis(); 
       }
       else {
         End = System.currentTimeMillis();
       }
-    }
+      System.out.println(End - Start);
+    // }
+    // else {
+    //   Robot.DriveSubsystem.arcadeDrive(OI.getDriverSpeed(), OI.getSteer());
+    // }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(End-Start > 200) {
+    if (End - Start > 200) {
       return true;
     }
     return false;

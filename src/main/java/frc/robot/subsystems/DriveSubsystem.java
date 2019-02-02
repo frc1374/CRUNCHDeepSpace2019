@@ -4,14 +4,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class DriveSubsystem extends PIDSubsystem {
-
-  
   static int b;
   public boolean isstill = true;
   public static float angle = 0;
@@ -20,7 +19,7 @@ public class DriveSubsystem extends PIDSubsystem {
   public double negt = 0;
   public double maxGyro = .5;
   public double rotateToAngleRate;
-  public AHRS ahrs;
+  public AHRS ahrs = new AHRS(SPI.Port.kMXP);
 
   public TalonSRX left1 = new TalonSRX(RobotMap.left1);
   public TalonSRX left2 = new TalonSRX(RobotMap.left2);
@@ -34,6 +33,10 @@ public class DriveSubsystem extends PIDSubsystem {
     // setSetpoint() - Sets where the PID controller should move the system
     // to
     // enable() - Enables the PID controller.
+    super.getPIDController().setInputRange(-180.0f, 180.0f);
+    super.getPIDController().setOutputRange(-1.0, 1.0);
+    setAbsoluteTolerance(Constants.kToleranceDegrees);
+    super.getPIDController().setContinuous(true);
   }
 
   public void tankDrive(double left, double right) {
@@ -63,6 +66,8 @@ public class DriveSubsystem extends PIDSubsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    ResetGyroAngle();
+    super.getPIDController().enable();
   }
 
   @Override
@@ -70,7 +75,7 @@ public class DriveSubsystem extends PIDSubsystem {
     // Return your input value for the PID loop
     // e.g. a sensor, like a potentiometer:
     // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    return 0.0;
+    return ahrs.pidGet();
   }
 
   @Override
