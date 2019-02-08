@@ -4,6 +4,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
@@ -25,6 +28,8 @@ public class DriveSubsystem extends PIDSubsystem {
   public TalonSRX left2 = new TalonSRX(RobotMap.left2);
   public TalonSRX right1 = new TalonSRX(RobotMap.right1);
   public TalonSRX right2 = new TalonSRX(RobotMap.right2);
+  public Compressor c = new Compressor(RobotMap.compressor);
+  public static DoubleSolenoid shift = new DoubleSolenoid(RobotMap.shift1, RobotMap.shift2);
 
   public DriveSubsystem() {
     // Insert a subsystem name and PID values here
@@ -39,6 +44,10 @@ public class DriveSubsystem extends PIDSubsystem {
     super.getPIDController().setContinuous(true);
   }
 
+  public void CompressorControl(){
+    c.setClosedLoopControl(true);    
+  }
+
   public void tankDrive(double left, double right) {
     left1.set(ControlMode.PercentOutput, left);
     left2.set(ControlMode.PercentOutput, left);
@@ -48,6 +57,15 @@ public class DriveSubsystem extends PIDSubsystem {
 
   public void arcadeDrive(double speed, double turn) {
     tankDrive(speed-turn, speed+turn);
+  }
+
+  public void shiftGear(boolean up, boolean down) {
+    if (up) {
+      shift.set(Value.kForward);
+    }
+    else if (down) {
+      shift.set(Value.kReverse);
+    }
   }
 
   public double GyroDrive(double turn){

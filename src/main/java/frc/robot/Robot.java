@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.*;
 
 /**
@@ -17,9 +18,11 @@ import frc.robot.commands.*;
  */
 public class Robot extends TimedRobot {
   public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
+  public static final IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
   //public static final GyroCommand GyroCommand = new GyroCommand();
   //public static boolean inAuto;
   Command DriveCommand = new DriveCommand();
+  Command IntakeCommand = new IntakeCommand();
   Command autonomousCommand = new GyroAuto();
   SendableChooser<String> chooser;
 
@@ -90,6 +93,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     DriveCommand.start();
+    IntakeCommand.start();
     //GyroCommand.start();
     //inAuto = false;
   }
