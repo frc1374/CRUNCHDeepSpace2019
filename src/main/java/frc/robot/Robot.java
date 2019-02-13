@@ -1,14 +1,14 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.commands.DriveCommand;
-import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.LiftSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.*;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -16,16 +16,15 @@ import frc.robot.subsystems.LiftSubsystem;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends IterativeRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
+public class Robot extends TimedRobot {
   public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
+  public static final IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
+  //public static final GyroCommand GyroCommand = new GyroCommand();
+  //public static boolean inAuto;
   Command DriveCommand = new DriveCommand();
-      public static ElevatorSubsystem ElevatorSubsystem;
-      public static LiftSubsystem LiftSubsystem;
+  Command IntakeCommand = new IntakeCommand();
+  Command autonomousCommand = new GyroAuto();
+  SendableChooser<String> chooser;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -33,9 +32,10 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    chooser = new SendableChooser<String>();
+    chooser.setDefaultOption("AutoDefault", "AutoDefault");
+    chooser.addOption("GyroAuto", "GyroAuto");
+    SmartDashboard.putData("Auto mode", chooser);
   }
 
   /**
@@ -50,6 +50,10 @@ public class Robot extends IterativeRobot {
   public void robotPeriodic() {
   }
 
+  @Override
+  public void disabledInit() {
+  }
+  
   /**
    * This autonomous (along with the chooser code above) shows how to select
    * between different autonomous modes using the dashboard. The sendable
@@ -63,10 +67,15 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // autoSelected = SmartDashboard.getString("Auto Selector",
-    // defaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    String Selected = chooser.getSelected();
+      switch (Selected) {
+	      case "GyroAuto":
+	        autonomousCommand = new GyroAuto();
+	        break;
+        }
+    //Robot.DriveSubsystem.ResetGyroAngle();
+    //inAuto = true;
+    autonomousCommand.start();
   }
 
   /**
@@ -75,15 +84,6 @@ public class Robot extends IterativeRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
   }
 
   /**
@@ -91,8 +91,11 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    DriveCommand.start();
     Scheduler.getInstance().run();
+    DriveCommand.start();
+    IntakeCommand.start();
+    //GyroCommand.start();
+    //inAuto = false;
   }
 
   /**
