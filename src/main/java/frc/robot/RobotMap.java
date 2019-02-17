@@ -6,6 +6,7 @@ public class RobotMap {
     //sensor
     public static final int topSwitch  = 0;
     public static final int bottomSwitch  = 1;
+    public static final int climbSwitch = 2;
     // drive
     public static final int left1       = 0;
     public static final int left2       = 1;
