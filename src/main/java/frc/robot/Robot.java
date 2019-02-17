@@ -1,12 +1,14 @@
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 
 /**
@@ -19,12 +21,19 @@ import frc.robot.commands.*;
 public class Robot extends TimedRobot {
   public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
   public static final IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
+  public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
   //public static final GyroCommand GyroCommand = new GyroCommand();
   //public static boolean inAuto;
   Command DriveCommand = new DriveCommand();
   Command IntakeCommand = new IntakeCommand();
+  Command ClimberCommand = new ClimberCommand();
+  Command VisionAlign = new VisionAlign();
   Command autonomousCommand = new GyroAuto();
   SendableChooser<String> chooser;
+
+  NetworkTableEntry tapeDetected, tapeYaw;
+  public static boolean tD;
+  public static double tY;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -36,6 +45,16 @@ public class Robot extends TimedRobot {
     chooser.setDefaultOption("AutoDefault", "AutoDefault");
     chooser.addOption("GyroAuto", "GyroAuto");
     SmartDashboard.putData("Auto mode", chooser);
+
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable table = inst.getTable("networkTable");
+    tapeDetected = table.getEntry("tapeDetected");
+    tapeYaw = table.getEntry("tapeYaw");
+
+    // UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
+    //         //camera1.setVideoMode();
+    //         camera1.setResolution(320, 240);
+    //         camera1.setFPS(30);
   }
 
   /**
@@ -48,6 +67,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    tD = tapeDetected.getBoolean(false);
+    tY = (double) tapeYaw.getNumber(1374.0);
   }
 
   @Override
@@ -94,6 +115,8 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     DriveCommand.start();
     IntakeCommand.start();
+    ClimberCommand.start();
+    VisionAlign.start();
     //GyroCommand.start();
     //inAuto = false;
   }
