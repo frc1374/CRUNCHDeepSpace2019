@@ -28,16 +28,16 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void arm(double axis) {
-    if (bottom.get() == false && top.get() == false){
+    if (bottom.get() == true && top.get() == true){
       	arm.set(ControlMode.PercentOutput, axis);
     }
-    if (bottom.get() == true){
+    if (bottom.get() == false){
       arm.set(ControlMode.PercentOutput,0);
       if(axis >0.1){
         arm.set(ControlMode.PercentOutput, axis);
       }
     }
-    if (top.get() == true){
+   if (top.get() == false){
       arm.set(ControlMode.PercentOutput,0);
       if(axis < -0.1){
         arm.set(ControlMode.PercentOutput, axis);

@@ -14,7 +14,7 @@ public class OI {
 
     // operator
     public static double getArm() { return Operator.getTriggerAxis(Hand.kRight) - Operator.getTriggerAxis(Hand.kLeft); }
-    public static double getWrist() { return Operator.getY(Hand.kLeft); }
+    public static double getWrist() {    return Operator.getY(Hand.kLeft); }
     public static double getWheels() { return Operator.getY(Hand.kRight); }
     public static boolean getEjectorOut() { return Operator.getBumper(Hand.kRight); }
     public static boolean getEjectorIn() { return Operator.getBumper(Hand.kLeft); }
