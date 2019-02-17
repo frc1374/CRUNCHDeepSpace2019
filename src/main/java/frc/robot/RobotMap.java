@@ -16,6 +16,9 @@ public class RobotMap {
     public static final int wrist       = 5;
     public static final int wheels      = 6;
 
+    //climber
+    public static final int climber     = 7;
+
     //hatch
     public static final int rightIn     = 1;
     public static final int rightOut    = 6;
