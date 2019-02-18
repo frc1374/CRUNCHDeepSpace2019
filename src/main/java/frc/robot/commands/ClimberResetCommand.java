@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
-public class ClimberCommand extends Command {
-  public ClimberCommand() {
+public class ClimberResetCommand extends Command {
+  public ClimberResetCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.ClimberSubsystem);
+    //requires(Robot.ClimberResetSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -19,9 +19,9 @@ public class ClimberCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.ClimberSubsystem.rotateClimber(OI.getClimb(),OI.getClimbReset());
-    System.out.println(Robot.ClimberSubsystem.count);
+    //Robot.ClimberResetSubsystem.climbReset(OI.getClimbReset());
   }
+
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {

@@ -22,11 +22,13 @@ public class Robot extends TimedRobot {
   public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
   public static final IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
   public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
+  //public static final ClimberResetSubsystem ClimberResetSubsystem = new ClimberResetSubsystem();
   //public static final GyroCommand GyroCommand = new GyroCommand();
   //public static boolean inAuto;
   Command DriveCommand = new DriveCommand();
   Command IntakeCommand = new IntakeCommand();
   Command ClimberCommand = new ClimberCommand();
+  //Command ClimberResetCommand = new ClimberResetCommand();
   Command VisionAlign = new VisionAlign();
   Command autonomousCommand = new GyroAuto();
   SendableChooser<String> chooser;
@@ -97,6 +99,7 @@ public class Robot extends TimedRobot {
     //Robot.DriveSubsystem.ResetGyroAngle();
     //inAuto = true;
     autonomousCommand.start();
+    //ClimberResetCommand.start();
   }
 
   /**
@@ -112,6 +115,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.putNumber("Climber Counter: ", Robot.ClimberSubsystem.count);
+    SmartDashboard.putBoolean("climb Swtich",Robot.ClimberSubsystem.climbSwitchR.get());
     Scheduler.getInstance().run();
     DriveCommand.start();
     IntakeCommand.start();

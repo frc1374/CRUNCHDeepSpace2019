@@ -15,11 +15,12 @@ public class OI {
 
     // operator
     public static double getArm() { return Operator.getTriggerAxis(Hand.kRight) - Operator.getTriggerAxis(Hand.kLeft); }
-    public static double getWrist() {    return Operator.getY(Hand.kLeft); }
+    public static double getWrist() { return Operator.getY(Hand.kLeft); }
     public static double getWheels() { return Operator.getY(Hand.kRight); }
-    public static double getClimb() { return Operator.getX(Hand.kRight); }
+    public static boolean getClimb() { return Operator.getAButton(); }
     public static boolean getEjectorOut() { return Operator.getBumper(Hand.kRight); }
     public static boolean getEjectorIn() { return Operator.getBumper(Hand.kLeft); }
+    public static boolean getClimbReset() {return Operator.getStartButton();}
 
     /*                                 Controls
     * Driver

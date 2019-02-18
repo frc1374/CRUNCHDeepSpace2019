@@ -7,6 +7,7 @@ public class RobotMap {
     public static final int topSwitch  = 0;
     public static final int bottomSwitch  = 1;
     public static final int climbSwitch = 2;
+    public static final int climbSwitchR = 3;
     // drive
     public static final int left1       = 0;
     public static final int left2       = 1;
