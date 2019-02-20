@@ -29,8 +29,8 @@ public class Robot extends TimedRobot {
   Command IntakeCommand = new IntakeCommand();
   Command ClimberCommand = new ClimberCommand();
   //Command ClimberResetCommand = new ClimberResetCommand();
-  Command VisionAlign = new VisionAlign();
-  Command autonomousCommand = new GyroAuto();
+  //Command VisionAlign = new VisionAlign();
+  //Command autonomousCommand = new GyroAuto();
   SendableChooser<String> chooser;
 
   NetworkTableEntry tapeDetected, tapeYaw;
@@ -93,12 +93,12 @@ public class Robot extends TimedRobot {
     String Selected = chooser.getSelected();
       switch (Selected) {
 	      case "GyroAuto":
-	        autonomousCommand = new GyroAuto();
+	      //  autonomousCommand = new GyroAuto();
 	        break;
         }
     //Robot.DriveSubsystem.ResetGyroAngle();
     //inAuto = true;
-    autonomousCommand.start();
+   // autonomousCommand.start();
     //ClimberResetCommand.start();
   }
 
@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
     DriveCommand.start();
     IntakeCommand.start();
     ClimberCommand.start();
-    VisionAlign.start();
+    //VisionAlign.start();
     //GyroCommand.start();
     //inAuto = false;
   }

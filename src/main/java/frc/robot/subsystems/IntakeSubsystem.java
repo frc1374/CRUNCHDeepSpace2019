@@ -28,29 +28,29 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void arm(double axis) {
-    if (bottom.get() == true && top.get() == true){
-      	arm.set(ControlMode.PercentOutput, axis);
-    }
-    if (bottom.get() == false){
+    //if (bottom.get() == true && top.get() == true){
+      	arm.set(ControlMode.PercentOutput, axis*-.3);
+    //}
+   /* if (bottom.get() == false){
       arm.set(ControlMode.PercentOutput,0);
       if(axis >0.1){
-        arm.set(ControlMode.PercentOutput, axis);
+        arm.set(ControlMode.PercentOutput, axis*.3);
       }
     }
-   if (top.get() == false){
+   if (!top.get() ){
       arm.set(ControlMode.PercentOutput,0);
       if(axis < -0.1){
-        arm.set(ControlMode.PercentOutput, axis);
+        arm.set(ControlMode.PercentOutput, axis*.3);
       }
-    }
+    }*/
   }
   
   public void wrist(double axis) {
-		wrist.set(ControlMode.PercentOutput, axis);
+		wrist.set(ControlMode.PercentOutput, axis*.5);
   }
   
   public void wheels(double axis) {
-		wheels.set(ControlMode.PercentOutput, axis);
+		wheels.set(ControlMode.PercentOutput, axis*-.5);
 	}
 
   @Override

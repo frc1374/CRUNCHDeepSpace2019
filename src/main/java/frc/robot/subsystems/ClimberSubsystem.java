@@ -25,7 +25,7 @@ public class ClimberSubsystem extends Subsystem {
       climber.set(ControlMode.PercentOutput,0);
     }
     else if(back == true ){
-      climber.set(ControlMode.PercentOutput,-.5);
+      climber.set(ControlMode.PercentOutput,-.2);
     }
     else if(back == false ){
       climber.set(ControlMode.PercentOutput,0);
