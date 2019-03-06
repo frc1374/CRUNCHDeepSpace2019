@@ -10,41 +10,26 @@ public class ClimberSubsystem extends Subsystem {
   public TalonSRX climber = new TalonSRX(RobotMap.climber);
   public LimitSwitch climbSwitch = new LimitSwitch(RobotMap.climbSwitch);
   public LimitSwitch climbSwitchR = new LimitSwitch(RobotMap.climbSwitchR);
-  public static int count;
-  public boolean wasactive;
-/*else if (climbSwitch.get() == false && axis == false) {
-      climber.set(ControlMode.PercentOutput, 0);
-    } */
 
   public void rotateClimber(Boolean axis, boolean back) {
-    
-    if (climbSwitch.get() == false && axis == true) {
+    // press a to climb, and the talon has a breakout board to automatically stop the climber at 90
+    // if that does not work go till bumpers pass lvl 2
+    // if you go over, use the arm.
+    if (!climbSwitch.get() && axis) {
       climber.set(ControlMode.PercentOutput, .5);
     }  
-    else if (climbSwitch.get() == true){
+    else if (!axis){
       climber.set(ControlMode.PercentOutput,0);
     }
-    else if(back == true ){
+    else if (climbSwitch.get()){
+      climber.set(ControlMode.PercentOutput,0);
+    }
+    else if(back){
       climber.set(ControlMode.PercentOutput,-.2);
     }
-    else if(back == false ){
+    else if(!back){
       climber.set(ControlMode.PercentOutput,0);
     }
-     if (climbSwitchR.get() == true && count == 1){
-      count = 2;
-      wasactive = true;
-    }
-    wasactive = false;
-     if (climbSwitchR.get() == true && count == 2 && wasactive == false){
-      count = 3;
-    }
-     if (count == 3){
-       back = false;
-       climber.set(ControlMode.PercentOutput,0);
-     }
-   
-    
-    
   }
   
   
@@ -53,6 +38,5 @@ public class ClimberSubsystem extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    count = 1;
   }
 }

@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
     NetworkTable table = inst.getTable("networkTable");
     tapeDetected = table.getEntry("tapeDetected");
     tapeYaw = table.getEntry("tapeYaw");
-
+   
     // UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
     //         //camera1.setVideoMode();
     //         camera1.setResolution(320, 240);
@@ -115,8 +115,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("Climber Counter: ", Robot.ClimberSubsystem.count);
-    SmartDashboard.putBoolean("climb Swtich",Robot.ClimberSubsystem.climbSwitchR.get());
     Scheduler.getInstance().run();
     DriveCommand.start();
     IntakeCommand.start();

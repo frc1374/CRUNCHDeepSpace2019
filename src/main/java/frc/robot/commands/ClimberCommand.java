@@ -20,7 +20,6 @@ public class ClimberCommand extends Command {
   @Override
   protected void execute() {
     Robot.ClimberSubsystem.rotateClimber(OI.getClimb(),OI.getClimbReset());
-    System.out.println(Robot.ClimberSubsystem.count);
   }
   // Make this return true when this Command no longer needs to run execute()
   @Override
