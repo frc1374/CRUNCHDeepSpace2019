@@ -27,8 +27,6 @@ public class RobotMap {
     public static final int climber     = 7;
 
     //hatch
-    public static final int rightIn     = 1;
-    public static final int rightOut    = 6;
-    public static final int leftIn      = 2;
-    public static final int leftOut     = 5;
+    public static final int hatchIn     = 1;
+    public static final int hatchOut    = 6;
 }

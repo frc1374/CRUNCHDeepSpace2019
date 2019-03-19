@@ -12,24 +12,21 @@ public class IntakeSubsystem extends Subsystem {
   public TalonSRX arm = new TalonSRX(RobotMap.arm);
   public TalonSRX wrist = new TalonSRX(RobotMap.wrist);
   public TalonSRX wheels = new TalonSRX(RobotMap.wheels);
-  public static DoubleSolenoid rightPistons = new DoubleSolenoid(RobotMap.rightIn, RobotMap.rightOut);
-  public static DoubleSolenoid leftPistons = new DoubleSolenoid(RobotMap.leftIn, RobotMap.leftOut);
+  public static DoubleSolenoid hatchPistons = new DoubleSolenoid(RobotMap.hatchIn, RobotMap.hatchOut);
   public LimitSwitch bottom = new LimitSwitch(RobotMap.bottomSwitch);
   public LimitSwitch top = new LimitSwitch(RobotMap.topSwitch);
   public void ejectHatch(boolean out, boolean in) {
     if (out) {
-			rightPistons.set(Value.kForward);
-			leftPistons.set(Value.kForward);
+			hatchPistons.set(Value.kForward);
 	  }
 	  else if (in) {
-	    rightPistons.set(Value.kReverse);
-	    leftPistons.set(Value.kReverse);
+	    hatchPistons.set(Value.kReverse);
     }
   }
 
   public void arm(double axis) {
     //if (bottom.get() == true && top.get() == true){
-      	arm.set(ControlMode.PercentOutput, axis*-.3);
+      	arm.set(ControlMode.PercentOutput, axis*-.65);
     //}
    /* if (bottom.get() == false){
       arm.set(ControlMode.PercentOutput,0);
@@ -46,7 +43,7 @@ public class IntakeSubsystem extends Subsystem {
   }
   
   public void wrist(double axis) {
-		wrist.set(ControlMode.PercentOutput, axis*.5);
+		wrist.set(ControlMode.PercentOutput, axis*-.5);
   }
   
   public void wheels(double axis) {

@@ -53,6 +53,8 @@ public class Robot extends TimedRobot {
     tapeDetected = table.getEntry("tapeDetected");
     tapeYaw = table.getEntry("tapeYaw");
    
+    //CameraServer.getInstance().startAutomaticCapture();
+    // CameraServer.getInstance().startAutomaticCapture(1);
     // UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
     //         //camera1.setVideoMode();
     //         camera1.setResolution(320, 240);
@@ -108,6 +110,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    DriveCommand.start();
+    IntakeCommand.start();
+    ClimberCommand.start();
   }
 
   /**
