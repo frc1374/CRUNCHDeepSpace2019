@@ -1,7 +1,11 @@
 package frc.robot;
 
-import edu.wpi.cscore.UsbCamera;
+
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.cscore.VideoMode;
+import edu.wpi.cscore.MjpegServer;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -47,18 +51,23 @@ public class Robot extends TimedRobot {
     chooser.setDefaultOption("AutoDefault", "AutoDefault");
     chooser.addOption("GyroAuto", "GyroAuto");
     SmartDashboard.putData("Auto mode", chooser);
-
+    //CameraServer.getInstance().startAutomaticCapture();
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable table = inst.getTable("networkTable");
     tapeDetected = table.getEntry("tapeDetected");
     tapeYaw = table.getEntry("tapeYaw");
    
+
+    UsbCamera Camera = CameraServer.getInstance().startAutomaticCapture();
+    Camera.setVideoMode(VideoMode.PixelFormat.kMJPEG, 640, 360, 15);
     //CameraServer.getInstance().startAutomaticCapture();
     // CameraServer.getInstance().startAutomaticCapture(1);
-    // UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
-    //         //camera1.setVideoMode();
-    //         camera1.setResolution(320, 240);
-    //         camera1.setFPS(30);
+    //UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
+    //camera1.setResolution(320, 240);
+    //camera1.setFPS(30);
+    //CameraServer server = CameraServer.getInstance();
+    //server.setQuality(50);  
+    //server.startAutomaticCapture("cam0");
   }
 
   /**

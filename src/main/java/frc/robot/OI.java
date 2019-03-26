@@ -21,6 +21,7 @@ public class OI {
     public static boolean getEjectorOut() { return Operator.getBumper(Hand.kRight); }
     public static boolean getEjectorIn() { return Operator.getBumper(Hand.kLeft); }
     public static boolean getClimbReset() {return Operator.getStartButton();}
+    public static boolean bigZoop() {return Operator.getYButton();}
 
     /*                                 Controls
     * Driver
