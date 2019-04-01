@@ -5,13 +5,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.Compressor;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class DriveSubsystem extends PIDSubsystem {
   public Compressor c = new Compressor(RobotMap.compressor);
-
+  public DoubleSolenoid shift = new DoubleSolenoid(RobotMap.shift1, RobotMap.shift2);
   public TalonSRX left1 = new TalonSRX(RobotMap.left1);
   public TalonSRX left2 = new TalonSRX(RobotMap.left2);
   public TalonSRX right1 = new TalonSRX(RobotMap.right1);
@@ -37,6 +38,15 @@ public class DriveSubsystem extends PIDSubsystem {
 
   public void arcadeDrive(double speed, double turn) {
     tankDrive(speed-turn, speed+turn);
+  }
+
+  public void shiftGear(boolean up, boolean down) {
+    if (up) {
+      shift.set(Value.kReverse);
+    }
+    else if (down) {
+      shift.set(Value.kForward);
+    }
   }
 
   @Override

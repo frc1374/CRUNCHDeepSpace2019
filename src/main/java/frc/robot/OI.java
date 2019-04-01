@@ -12,6 +12,8 @@ public class OI {
     public static double getSteer() { return Driver.getX(Hand.kLeft); }
     public static boolean getGyro() { return Driver.getXButton(); }
     public static boolean getAlignment() { return Driver.getYButton(); }
+    public static boolean getGearUp() { return Driver.getBButton(); }
+    public static boolean getGearDown() { return Driver.getAButton(); }
 
     // operator
     public static double getArm() { return Operator.getTriggerAxis(Hand.kRight) - Operator.getTriggerAxis(Hand.kLeft); }

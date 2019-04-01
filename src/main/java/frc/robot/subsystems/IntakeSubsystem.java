@@ -43,7 +43,7 @@ public class IntakeSubsystem extends Subsystem {
   }
   
   public void wrist(double axis) {
-		wrist.set(ControlMode.PercentOutput, axis*-.5);
+		wrist.set(ControlMode.PercentOutput, axis*.5);
   }
   
   public void wheels(double axis) {
