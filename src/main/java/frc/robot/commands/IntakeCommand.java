@@ -23,6 +23,7 @@ public class IntakeCommand extends Command {
     Robot.IntakeSubsystem.arm(OI.getArm());
     Robot.IntakeSubsystem.wrist(OI.getWrist());
     Robot.IntakeSubsystem.wheels(OI.getWheels());
+    Robot.IntakeSubsystem.zoop(OI.bigZoop());
   }
 
   // Make this return true when this Command no longer needs to run execute()

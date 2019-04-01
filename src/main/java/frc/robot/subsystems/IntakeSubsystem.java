@@ -23,7 +23,11 @@ public class IntakeSubsystem extends Subsystem {
 	    hatchPistons.set(Value.kReverse);
     }
   }
-
+public void zoop(boolean zip){
+  if (zip){
+    wheels(100); //zap
+  }
+}
   public void arm(double axis) {
     //if (bottom.get() == true && top.get() == true){
       	arm.set(ControlMode.PercentOutput, axis*-.65);
